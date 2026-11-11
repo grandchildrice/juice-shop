@@ -5,6 +5,30 @@
 
 import { type Request, type Response } from 'express'
 import { AddressModel } from '../models/address'
+import { challenges } from '../data/datacache'
+import * as security from '../lib/insecurity'
+import * as challengeUtils from '../lib/challengeUtils'
+
+export function previewAddress () {
+  return async (req: Request, res: Response) => {
+    const user = security.authenticatedUsers.from(req)
+    if (req.headers.authorization && !user) {
+      res.status(401).json({ error: 'Invalid session.' })
+      return
+    }
+    const address = await AddressModel.findByPk(req.params.id)
+    if (!address) {
+      res.status(404).json({ error: 'Address not found.' })
+      return
+    }
+    if (user && address.UserId !== user.data.id) {
+      res.status(403).json({ error: 'This address belongs to another customer.' })
+      return
+    }
+    challengeUtils.solveIf(challenges.anonymousAddressChallenge, () => !user)
+    res.json({ status: 'success', data: address })
+  }
+}
 
 export function getAddress () {
   return async (req: Request, res: Response) => {

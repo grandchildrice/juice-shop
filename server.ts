@@ -66,6 +66,8 @@ import datacreator from './data/datacreator'
 import locales from './data/static/locales.json'
 
 import { login } from './routes/login'
+import { emailLogin } from './routes/emailLogin'
+import { searchRecipes } from './routes/recipes'
 import * as verify from './routes/verify'
 import * as address from './routes/address'
 import * as metrics from './routes/metrics'
@@ -80,7 +82,7 @@ import { applyCoupon } from './routes/coupon'
 import dataErasure from './routes/dataErasure'
 import { dataExport } from './routes/dataExport'
 import { chat } from './routes/chat'
-import { retrieveBasket } from './routes/basket'
+import { retrieveBasket, setDeliveryAddress } from './routes/basket'
 import { searchProducts } from './routes/search'
 import { trackOrder } from './routes/trackOrder'
 import { saveLoginIp } from './routes/saveLoginIp'
@@ -632,6 +634,15 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
   }
 
   /* Custom Restful API */
+  const emailSignIn = emailLogin()
+  app.post('/rest/user/email-login/request', utils.asyncHandler(emailSignIn.request))
+  app.post('/rest/user/email-login/verify',
+    rateLimit({ windowMs: 5 * 60 * 1000, max: 100, validate: false }),
+    utils.asyncHandler(emailSignIn.verify))
+  app.get('/rest/mailbox', security.isAuthorized(), utils.asyncHandler(emailSignIn.inbox))
+  app.post('/rest/recipes/search', security.isAuthorized(), searchRecipes())
+  app.get('/rest/address/:id/preview', utils.asyncHandler(address.previewAddress()))
+  app.post('/rest/basket/:id/address', utils.asyncHandler(setDeliveryAddress()))
   app.post('/rest/user/login', login())
   app.get('/rest/user/change-password', utils.asyncHandler(changePassword()))
   app.post('/rest/user/reset-password', utils.asyncHandler(resetPassword()))

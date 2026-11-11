@@ -21,6 +21,7 @@ InferCreationAttributes<Basket>
   declare UserId: CreationOptional<number>
   declare id: CreationOptional<number>
   declare coupon: CreationOptional<string> | null
+  declare addressId: CreationOptional<number> | null
   declare Products?: NonAttribute<ProductModel[]>
 }
 
@@ -33,6 +34,7 @@ const BasketModelInit = (sequelize: Sequelize) => {
         autoIncrement: true
       },
       coupon: DataTypes.STRING,
+      addressId: DataTypes.INTEGER,
       UserId: {
         type: DataTypes.INTEGER
       }

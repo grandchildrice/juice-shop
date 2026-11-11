@@ -45,6 +45,10 @@ export class BasketService {
     return this.http.get(`${this.hostServer}/rest/basket/${id}`).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
   }
 
+  setDeliveryAddress (id: number, addressId: string) {
+    return this.http.post(`${this.hostServer}/rest/basket/${id}/address`, { addressId }).pipe(map((response: any) => response.data))
+  }
+
   get (id: number) {
     return this.http.get(`${this.host}/${id}`).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
   }

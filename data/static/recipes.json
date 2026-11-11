@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Apple Cooler",
+    "deluxe": false,
+    "ingredients": "150 ml apple juice, 100 ml sparkling water, ice",
+    "instructions": "Fill a glass with ice, add apple juice and top with sparkling water. Stir gently."
+  },
+  {
+    "id": 2,
+    "name": "Carrot & Apple Blend",
+    "deluxe": true,
+    "ingredients": "150 ml carrot juice, 100 ml apple juice, 1 teaspoon lemon juice",
+    "instructions": "Combine the carrot and apple juices, stir in the lemon juice and serve chilled."
+  }
+]

@@ -4,7 +4,6 @@
  */
 
 import { Component, NgZone, type OnInit, inject, ChangeDetectionStrategy } from '@angular/core'
-import { AddressService } from '../Services/address.service'
 import { PaymentService } from '../Services/payment.service'
 import { BasketService } from '../Services/basket.service'
 import { Router } from '@angular/router'
@@ -26,7 +25,6 @@ import { MatCardModule } from '@angular/material/card'
 })
 export class OrderSummaryComponent implements OnInit {
   private readonly router = inject(Router)
-  private readonly addressService = inject(AddressService)
   private readonly paymentService = inject(PaymentService)
   private readonly basketService = inject(BasketService)
   private readonly deliveryService = inject(DeliveryService)
@@ -45,7 +43,7 @@ export class OrderSummaryComponent implements OnInit {
       this.deliveryPrice = method.price
     })
 
-    this.addressService.getById(sessionStorage.getItem('addressId')).subscribe({
+    this.basketService.setDeliveryAddress(Number(sessionStorage.getItem('bid')), sessionStorage.getItem('addressId')).subscribe({
       next: (address) => {
         this.address = address
       },

@@ -1,5 +1,35 @@
 # ![Juice Shop Logo](https://raw.githubusercontent.com/juice-shop/juice-shop/master/frontend/src/assets/public/images/JuiceShop_Logo_100px.png) OWASP Juice Shop
 
+## セキュリティデモ版（grandchildrice fork）
+
+AIが発見したWeb脆弱性の公開事例を題材に、メールOTPの送信先変更、レシピの課金回避、ログアウトによる住所閲覧、配送先の関連付けを使う情報漏えいの4演習を追加しています。LLM・SMTP・外部決済サービスの設定は不要です。
+
+```sh
+git clone --branch demo --depth 1 https://github.com/grandchildrice/juice-shop.git
+cd juice-shop
+docker compose up --build
+```
+
+起動後は <http://localhost:3000> を開いてください。Docker Composeを使わない場合:
+
+```sh
+docker build -t grandchildrice-juice-shop:demo .
+docker run --rm -p 127.0.0.1:3000:3000 grandchildrice-juice-shop:demo
+```
+
+Node.js 24を使う場合は、クローンしたディレクトリで以下を実行します。
+
+```sh
+npm install
+npm start
+```
+
+- [参加者向けセットアップ](docs/participant-quickstart.md): 必要環境、起動、アカウント準備、停止と再起動。
+- [デモ実演の全手順](docs/security-demo-runbook.md): 新規4件と既存3件の操作、説明、期待結果と復旧方法。
+- [公開事例と出典](docs/ai-discovered-web-vulnerability-candidates.md)。
+
+以降は上流OWASP Juice Shopの案内です。
+
 [![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://owasp.org/projects/#sec-flagships)
 [![GitHub release](https://img.shields.io/github/release/juice-shop/juice-shop.svg)](https://github.com/juice-shop/juice-shop/releases/latest)
 [![Twitter Follow](https://img.shields.io/twitter/follow/owasp_juiceshop.svg?style=social&label=Follow)](https://twitter.com/owasp_juiceshop)

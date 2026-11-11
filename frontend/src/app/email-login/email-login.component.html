@@ -1,0 +1,33 @@
+<!--
+  ~ Copyright (c) 2014-2026 Bjoern Kimminich & the OWASP Juice Shop contributors.
+  ~ SPDX-License-Identifier: MIT
+-->
+
+<mat-card appearance="outlined" class="mat-elevation-z6">
+  <mat-card-content>
+    <h1>Sign in by email</h1>
+    <p>Receive a one-time code in your shop mailbox. Codes expire after five minutes.</p>
+    @if (error()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+    <form (ngSubmit)="requestCode()">
+      <mat-form-field appearance="outline">
+        <mat-label>Email address</mat-label>
+        <input matInput id="otpEmail" name="email" type="email" [(ngModel)]="email" required>
+      </mat-form-field>
+      <button mat-raised-button type="submit" id="sendCodeButton" [disabled]="!email || busy()">Send sign-in code</button>
+    </form>
+    @if (requestId()) {
+      <p>Check your mailbox for a six-digit code.</p>
+      <form (ngSubmit)="verifyCode()">
+        <mat-form-field appearance="outline">
+          <mat-label>Sign-in code</mat-label>
+          <input matInput id="otpCode" name="code" inputmode="numeric" autocomplete="one-time-code" [(ngModel)]="code" required maxlength="6">
+        </mat-form-field>
+        <button mat-raised-button type="submit" id="verifyCodeButton" [disabled]="code.length !== 6 || busy()">Sign in</button>
+      </form>
+    }
+    <p><a routerLink="/mailbox">Open shop mailbox</a> · <a routerLink="/login">Sign in with a password</a></p>
+    <p>Mailboxes are simulated inside this training application. No email is sent externally.</p>
+  </mat-card-content>
+</mat-card>

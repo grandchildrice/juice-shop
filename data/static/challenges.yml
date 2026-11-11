@@ -1647,3 +1647,56 @@
     - 'What would the shop do if it was asked to register a passkey it already knows?'
   mitigationUrl: 'https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html'
   key: passkeyCredentialOverwriteChallenge
+-
+  name: 'Misdelivered Login Code'
+  category: 'Broken Authentication'
+  tags:
+    - Good for Demos
+  description: 'Sign in to another customer account by having its email sign-in code delivered to your own shop mailbox.'
+  difficulty: 3
+  hints:
+    - 'The password login page also offers email sign-in. Open your shop mailbox while logged in to your own account.'
+    - 'Inspect the request that sends a sign-in code. Which account does it identify, and where does it send the code?'
+    - 'A valid code proves access to a mailbox, but is that mailbox necessarily registered to the account being accessed?'
+  mitigationUrl: 'https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html'
+  key: otpDeliveryChallenge
+-
+  name: 'Recipe Paywall Bypass'
+  category: 'Broken Access Control'
+  tags:
+    - Good for Demos
+    - Code Analysis
+  description: 'Read a Deluxe recipe as a non-Deluxe customer without upgrading your membership.'
+  difficulty: 3
+  hints:
+    - 'The juice recipe search returns different information for ordinary and Deluxe customers.'
+    - 'Look at the frontend recipe search code for options that the normal search form does not send.'
+    - 'Does the server use your membership to decide what to reveal, or does it trust the search options?'
+  mitigationUrl: 'https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html'
+  key: recipePaywallChallenge
+-
+  name: 'Signed Out Address Preview'
+  category: 'Broken Access Control'
+  tags:
+    - Good for Demos
+  description: 'Read a saved delivery address through its preview after signing out.'
+  difficulty: 2
+  hints:
+    - 'Saved delivery addresses have a preview link. Keep a copy of its URL.'
+    - 'Try the same preview while signed in as a different customer.'
+    - 'Being signed in is not the only authentication state worth testing.'
+  mitigationUrl: 'https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html'
+  key: anonymousAddressChallenge
+-
+  name: 'Borrowed Delivery Address'
+  category: 'Broken Access Control'
+  tags:
+    - Good for Demos
+  description: 'Make your own order summary display a delivery address belonging to another customer.'
+  difficulty: 3
+  hints:
+    - 'Use two customer accounts to compare their saved addresses and checkout requests.'
+    - 'Direct address retrieval checks ownership. Does selecting an address for your basket do the same?'
+    - 'Inspect the address selected for the order summary and test a reference to the other account''s address.'
+  mitigationUrl: 'https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html'
+  key: checkoutAddressChallenge

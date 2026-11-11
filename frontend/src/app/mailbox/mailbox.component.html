@@ -1,0 +1,27 @@
+<!--
+  ~ Copyright (c) 2014-2026 Bjoern Kimminich & the OWASP Juice Shop contributors.
+  ~ SPDX-License-Identifier: MIT
+-->
+
+<mat-card appearance="outlined" class="mat-elevation-z6">
+  <mat-card-content>
+    <h1>Shop mailbox</h1>
+    <p>This simulated inbox receives sign-in codes for your shop account.</p>
+    @if (error()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+    @if (mailbox(); as inbox) {
+      <h2 id="mailboxOwner">{{ inbox.email }}</h2>
+      @for (message of inbox.messages; track message.id) {
+        <article>
+          <h3>Your sign-in code</h3>
+          <p class="login-code">{{ message.code }}</p>
+          <p>Expires: {{ message.expiresAt | date:'medium' }}</p>
+        </article>
+      } @empty {
+        <p>No pending sign-in codes.</p>
+      }
+    }
+    <button mat-raised-button id="refreshMailboxButton" (click)="load()">Refresh inbox</button>
+  </mat-card-content>
+</mat-card>

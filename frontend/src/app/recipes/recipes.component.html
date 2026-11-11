@@ -1,0 +1,37 @@
+<!--
+  ~ Copyright (c) 2014-2026 Bjoern Kimminich & the OWASP Juice Shop contributors.
+  ~ SPDX-License-Identifier: MIT
+-->
+
+<mat-card appearance="outlined" class="mat-elevation-z6">
+  <mat-card-content>
+    <h1>Juice recipes</h1>
+    <p>Make your next drink at home. Deluxe members get access to our exclusive blends.</p>
+    <form (ngSubmit)="search()">
+      <mat-form-field appearance="outline">
+        <mat-label>Search recipes</mat-label>
+        <input matInput id="recipeQuery" name="query" [(ngModel)]="query">
+      </mat-form-field>
+      <button mat-raised-button type="submit" id="searchRecipesButton">Search</button>
+    </form>
+    @if (error()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+    @for (recipe of recipes(); track recipe.id) {
+      <article class="recipe">
+        <h2>{{ recipe.name }}</h2>
+        @if (recipe.instructions) {
+          <p>{{ recipe.ingredients }}</p>
+          <p class="recipe-instructions">{{ recipe.instructions }}</p>
+        } @else {
+          <p>Ingredients and instructions are available to Deluxe members.</p>
+          <a routerLink="/deluxe-membership">Become a Deluxe member</a>
+        }
+      </article>
+    } @empty {
+      @if (!error()) {
+        <p>No recipes found.</p>
+      }
+    }
+  </mat-card-content>
+</mat-card>

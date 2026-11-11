@@ -48,6 +48,9 @@
     <ng-container matColumnDef="Edit">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
+        <button mat-icon-button routerLink="/address/preview/{{ element.id }}" aria-label="Preview delivery address">
+          <mat-icon>visibility</mat-icon>
+        </button>
         <button mat-icon-button routerLink="/address/edit/{{ element.id }}">
           <i class="far fa-edit"></i>
         </button>

@@ -16,7 +16,6 @@ import { OrderSummaryComponent } from './order-summary.component'
 import { PurchaseBasketComponent } from '../purchase-basket/purchase-basket.component'
 import { RouterTestingModule } from '@angular/router/testing'
 import { BasketService } from '../Services/basket.service'
-import { AddressService } from '../Services/address.service'
 import { of } from 'rxjs/internal/observable/of'
 import { throwError } from 'rxjs'
 import { PaymentService } from '../Services/payment.service'
@@ -32,18 +31,14 @@ describe('OrderSummaryComponent', () => {
     let component: OrderSummaryComponent
     let fixture: ComponentFixture<OrderSummaryComponent>
     let basketService: any
-    let addressService: any
     let paymentService: any
     let deliveryService: any
     let deluxeGuard
     let snackBar: any
 
     beforeEach(async () => {
-        addressService = {
-            getById: vi.fn().mockName("AddressService.getById")
-        }
-        addressService.getById.mockReturnValue(of([]))
         basketService = {
+            setDeliveryAddress: vi.fn().mockReturnValue(of([])),
             checkout: vi.fn().mockName("BasketService.checkout"),
             find: vi.fn().mockName("BasketService.find"),
             updateNumberOfCartItems: vi.fn().mockName("BasketService.updateNumberOfCartItems"),
@@ -86,7 +81,6 @@ describe('OrderSummaryComponent', () => {
                 OrderSummaryComponent, PurchaseBasketComponent, OrderCompletionComponent],
             providers: [
                 { provide: BasketService, useValue: basketService },
-                { provide: AddressService, useValue: addressService },
                 { provide: PaymentService, useValue: paymentService },
                 { provide: DeliveryService, useValue: deliveryService },
                 { provide: DeluxeGuard, useValue: deluxeGuard },
@@ -112,8 +106,8 @@ describe('OrderSummaryComponent', () => {
         expect(component).toBeTruthy()
     })
 
-    it('should log errors from address service directly to browser console', () => {
-        addressService.getById.mockReturnValue(throwError('Error'))
+    it('should log errors from delivery address selection directly to browser console', () => {
+        basketService.setDeliveryAddress.mockReturnValue(throwError('Error'))
         console.log = vi.fn()
         component.ngOnInit()
         expect(console.log).toHaveBeenCalledWith('Error')
@@ -128,7 +122,7 @@ describe('OrderSummaryComponent', () => {
     })
 
     it('should hold address on ngOnInit', () => {
-        addressService.getById.mockReturnValue(of({ address: 'address' }))
+        basketService.setDeliveryAddress.mockReturnValue(of({ address: 'address' }))
         component.ngOnInit()
         expect(component.address).toEqual({ address: 'address' })
     })

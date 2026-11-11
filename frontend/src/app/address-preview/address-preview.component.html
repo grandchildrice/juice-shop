@@ -1,0 +1,22 @@
+<!--
+  ~ Copyright (c) 2014-2026 Bjoern Kimminich & the OWASP Juice Shop contributors.
+  ~ SPDX-License-Identifier: MIT
+-->
+
+<mat-card appearance="outlined" class="mat-elevation-z6">
+  <mat-card-content>
+    <h1>Delivery address preview</h1>
+    @if (error()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+    @if (address(); as deliveryAddress) {
+      <address id="addressPreview">
+        <p>{{ deliveryAddress.fullName }}</p>
+        <p>{{ deliveryAddress.streetAddress }}</p>
+        <p>{{ deliveryAddress.city }}, {{ deliveryAddress.state }} {{ deliveryAddress.zipCode }}</p>
+        <p>{{ deliveryAddress.country }}</p>
+        <p>{{ deliveryAddress.mobileNum }}</p>
+      </address>
+    }
+  </mat-card-content>
+</mat-card>

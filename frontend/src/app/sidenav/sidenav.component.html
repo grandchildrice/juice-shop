@@ -262,6 +262,10 @@
       {{"LABEL_PHOTO_WALL" | translate}}
     </span>
   </a>
+  <a mat-list-item routerLink="/recipes" (click)="onToggleSidenav()" aria-label="Go to juice recipes">
+    <mat-icon>menu_book</mat-icon>
+    <span class="menu-text truncate">Juice recipes</span>
+  </a>
   @if (isLoggedIn()) {
     <a mat-list-item routerLink="/deluxe-membership" (click)="onToggleSidenav()" aria-label="Go to deluxe membership page">
       <mat-icon>card_membership</mat-icon>

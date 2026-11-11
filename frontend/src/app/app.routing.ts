@@ -28,6 +28,10 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { AddressCreateComponent } from './address-create/address-create.component'
 import { AddressSelectComponent } from './address-select/address-select.component'
 import { SavedAddressComponent } from './saved-address/saved-address.component'
+import { AddressPreviewComponent } from './address-preview/address-preview.component'
+import { EmailLoginComponent } from './email-login/email-login.component'
+import { MailboxComponent } from './mailbox/mailbox.component'
+import { RecipesComponent } from './recipes/recipes.component'
 import { PaymentComponent } from './payment/payment.component'
 import { SavedPaymentMethodsComponent } from './saved-payment-methods/saved-payment-methods.component'
 import { AccountingComponent } from './accounting/accounting.component'
@@ -76,6 +80,26 @@ const loadAboutComponent = async () => {
 
 // vuln-code-snippet start adminSectionChallenge scoreBoardChallenge web3SandboxChallenge
 const routes: Routes = [
+  // vuln-code-snippet hide-start
+  {
+    path: 'email-login',
+    component: EmailLoginComponent
+  },
+  {
+    path: 'mailbox',
+    component: MailboxComponent,
+    canActivate: [LoginGuard]
+  },
+  {
+    path: 'recipes',
+    component: RecipesComponent,
+    canActivate: [LoginGuard]
+  },
+  {
+    path: 'address/preview/:addressId',
+    component: AddressPreviewComponent
+  },
+  // vuln-code-snippet hide-end
   { // vuln-code-snippet neutral-line adminSectionChallenge
     path: 'administration', // vuln-code-snippet vuln-line adminSectionChallenge
     component: AdministrationComponent, // vuln-code-snippet neutral-line adminSectionChallenge

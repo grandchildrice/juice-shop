@@ -14,6 +14,8 @@
 .playwright-mcp/
 /bom.json
 /bom.xml
+/data/*.sqlite*
+/ftp/order_*.pdf
 build/reports/
 coverage/
 cypress/
